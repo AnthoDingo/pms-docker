@@ -3,14 +3,14 @@ services:
   - docker
 
 before_script:
-  - docker build -t $DOCKER_LATEST .
+  - docker build -t $DOCKER_IMAGE:latest .
 
 script:
-  - docker tag $DOCKER_LATEST $DOCKER_VERSION
+  - docker tag $DOCKER_IMAGE:latest $DOCKER_IMAGE:$DOCKER_VERSION
 
 deploy:
   provider: script
-  script: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push $DOCKER_LATEST && docker push $DOCKER_VERSION
+  script: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push $DOCKER_IMAGE:latest && docker push $DOCKER_IMAGE:$DOCKER_VERSION
   on:
     branch: 
       - master
